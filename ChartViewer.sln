@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31613.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ChartExtractor", "ChartExtractor\ChartExtractor.fsproj", "{22AF8F90-7967-4BD9-9A7D-CF34D45513EB}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ChartExtractorTest", "ChartExtractorTest\ChartExtractorTest.fsproj", "{90A955F6-D6F1-4040-A624-E9D99F1972C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{22AF8F90-7967-4BD9-9A7D-CF34D45513EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22AF8F90-7967-4BD9-9A7D-CF34D45513EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22AF8F90-7967-4BD9-9A7D-CF34D45513EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90A955F6-D6F1-4040-A624-E9D99F1972C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90A955F6-D6F1-4040-A624-E9D99F1972C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90A955F6-D6F1-4040-A624-E9D99F1972C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90A955F6-D6F1-4040-A624-E9D99F1972C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

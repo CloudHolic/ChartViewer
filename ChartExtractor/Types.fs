@@ -42,7 +42,7 @@ module Types =
         {
             // Metadata
             FileType    : FileType          // File type like Osu, BMS, Quaver, O2jam, StepMania, and so on.
-            FileName    : FileName option   // Audio file name, if exists
+            AudioName   : FileName option   // Audio file name, if exists
             Title       : PersonName option // Song title
             Artist      : PersonName option // Song artist
             Author      : PersonName option // Beatmap creator
@@ -56,10 +56,10 @@ module Types =
             Notes       : Note list
         }       
 
-        static member create filetype filename title artist author difficulty lines timings notes =
+        static member create filetype audioname title artist author difficulty lines timings notes =
             {
                 FileType = filetype
-                FileName = filename
+                AudioName = audioname
                 Title = title
                 Artist = artist
                 Author = author
