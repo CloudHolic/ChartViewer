@@ -1,6 +1,5 @@
 ﻿// Learn more about F# at http://docs.microsoft.com/dotnet/fsharp
 
-open System
 open FParsec
 
 // Define a function to construct a message to print
@@ -9,10 +8,11 @@ let from whom =
 
 [<EntryPoint>]
 let main argv =
-    let test p str =
-        match run p str with
-        | Success(result, _, _)     -> printfn "Success: %A" result
-        | Failure(errorMsg, _, _)   -> printfn "Failure: %s" errorMsg
+    let test p (str: string) =
+        str.TrimEnd() |> run p
+        |> function
+            | Success(result, _, _)     -> printfn "Success: %A" result
+            | Failure(errorMsg, _, _)   -> printfn "Failure: %s" errorMsg
 
     let str_ws s = pstring s >>. spaces
 
@@ -25,7 +25,7 @@ let main argv =
     test (strMetaParser "AudioFileName") "AudioFileName: aaa.wav"
     test (strMetaParser "Title") "Title : ???"
     test (strMetaParser "Artist") "  Artist:    frolica"
-    test (strMetaParser "Creator") "Creator:        loli god       "
+    test (strMetaParser "Creator") ("Creator:        loli god       ")
     test (strMetaParser "Difficulty") "Difficulty:SHD   "
     test (intMetaParser "CircleSize") "CircleSize:     5"
     0 // return an integer exit code
