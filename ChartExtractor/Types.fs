@@ -1,7 +1,7 @@
 ﻿namespace ChartExtractor
 
 module Types =
-    let inline internal (|*|>) (a, b, c, d, e, f, g, h) func = func a b c d e f g h
+    let inline (|*|>) (a, b, c, d, e, f, g, h) func = func a b c d e f g h
 
     // Base type abbreviations
     type FileType = 
