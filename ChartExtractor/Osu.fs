@@ -5,7 +5,6 @@ open FParsec
 open Types
 
 module Osu =
-
     let internal parse(path: string) : Beatmap =
         let txt = File.ReadAllText path        
         let clearNone v = List.fold (fun x y -> match y with None -> x | Some(z) -> z :: x) [] v
@@ -16,12 +15,6 @@ module Osu =
         let strMetaParser key = metaParser key >>. manySatisfy (fun c -> c <> '\"')
         let intMetaParser key = metaParser key >>. pint32
 
-        let VersionParser = pstring "osu file format v" >>. pint32
-        let AudioNameParser = strMetaParser "AudioFileName"
-        let TitleParser = strMetaParser "Title"
-        let ArtistParser = strMetaParser "Artist"
-        let AuthorParser = strMetaParser "Creator"
-        let DiffNameParser = strMetaParser "Difficulty"
         let LinesParser = intMetaParser "CircleSize"
 
         // let TimingParser =
@@ -34,10 +27,9 @@ module Osu =
             match parser with
             | "" ->
                 do! skipRestOfLine true
-                // return metaParser key
+                do! metaParser key
             | v ->
-                printfn "Key: %s" v
-                // return stringReturn v
+                printfn $"Key: %s{v}"
         }
         
         let osuParser = parse {
@@ -46,15 +38,14 @@ module Osu =
             match version with
             | 14 ->
                 do! skipRestOfLine true
-                let! audioFile = metaParser "AudioFileName"
-                return audioFile
+                do! pipe5 (metaParser "AudioFileName") (metaParser "Title") (metaParser "Artist") (metaParser "Creator") (metaParser "Difficulty")
             | _ ->
-                printfn "It's an old osu format."
+                printfn "It's an old format."
         }
 
         match run osuParser txt with
         | Success (v, _, _) -> printfn "Success"
-        | Failure (msg, err, _) -> printfn "%A" msg
+        | Failure (msg, err, _) -> printfn $"%A{msg}"
 
         //match run (many ) txt with
         //| Success (v, _, _) -> Beatmap.create Osu

@@ -9,7 +9,6 @@
   <ItemGroup>
     <Compile Include="Types.fs" />
     <Compile Include="Osu.fs" />
-    <Compile Include="Library.fs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -13,7 +13,7 @@ let main argv =
             | Success(result, _, _)     -> printfn "Success: %A" result
             | Failure(errorMsg, _, _)   -> printfn "Failure: %s" errorMsg
 
-    let text = File.ReadAllText @"C:\Users\SANDS\Downloads\373357 Tia - The Glory Days\Tia - The Glory Days (CloudHolic) [Glory].osu"    
+    let text = File.ReadAllText @"C:\Users\SANDS\Downloads\Glory.osu"    
     let VersionParser = pstring "osu file format v" >>. pint32
 
     let str_ws s = pstring s >>. spaces    
@@ -33,15 +33,26 @@ let main argv =
 
     let rec metaParser key = parse {
         do! spaces
-        let! parser = str_ws key >>. str_ws ":" >>. manySatisfy (fun c -> c <> '\"') |> opt
+        let! parser = str_ws key >>. str_ws ":" >>. manySatisfy (fun c -> c <> '\"')
         match parser with
-        | Some(v) ->
-            printfn "Key: %s" v
-        | None ->            
-            do! skipRestOfLine true            
+        | "" ->
+            do! skipRestOfLine true >>. metaParser key
+        | v ->
+            do! skipRestOfLine true
     }
 
-    printfn "%A" (run (metaParser "AudioFileName") text)
+    let osuParser = parse {
+        do! spaces
+        let! version = pstring "osu file format v" >>. pint32
+        match version with
+        | 14 ->
+            do! metaParser "AudioFilename" >>. metaParser "Title" >>. metaParser "Artist" >>. metaParser "Creator" >>. metaParser "Difficulty"
+        | _ ->
+            printfn "It's an old format."
+    }
 
+    match run osuParser text with
+    | Success (v, _, _) -> printfn $"Success %A{v}"
+    | Failure (msg, err, _) -> printfn $"%A{msg}"
 
     0 // return an integer exit code
