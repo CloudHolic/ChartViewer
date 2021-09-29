@@ -31,14 +31,18 @@ module Osu =
             | v ->
                 printfn $"Key: %s{v}"
         }
-        
+
         let osuParser = parse {
             do! spaces
             let! version = pstring "osu file format v" >>. pint32
             match version with
             | 14 ->
                 do! skipRestOfLine true
-                do! pipe5 (metaParser "AudioFileName") (metaParser "Title") (metaParser "Artist") (metaParser "Creator") (metaParser "Difficulty")
+                do! metaParser "AudioFileName"
+                do! metaParser "Title"
+                do! metaParser "Artist"
+                do! metaParser "Creator"
+                do! metaParser "Difficulty"
             | _ ->
                 printfn "It's an old format."
         }

@@ -5,6 +5,19 @@ open FParsec
 let from whom =
     sprintf "from %s" whom
 
+let sample = @"osu file format v14
+AudioFilename: theglorydays.mp3
+AudioLeadIn: 0
+PreviewTime: 149255
+Countdown: 0
+SampleSet: Soft
+StackLeniency: 0.7
+Mode: 3
+LetterboxInBreaks: 0
+SpecialStyle: 0
+WidescreenStoryboard: 0
+"
+
 [<EntryPoint>]
 let main argv =
     let test p (str: string) =
@@ -51,7 +64,7 @@ let main argv =
             printfn "It's an old format."
     }
 
-    match run osuParser text with
+    match run osuParser sample with
     | Success (v, _, _) -> printfn $"Success %A{v}"
     | Failure (msg, err, _) -> printfn $"%A{msg}"
 
