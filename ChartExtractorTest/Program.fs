@@ -51,6 +51,7 @@ let main argv =
         | "" ->
             do! skipRestOfLine true >>. metaParser key
         | v ->
+            printfn "%A" v
             do! skipRestOfLine true
     }
 
@@ -64,8 +65,10 @@ let main argv =
             printfn "It's an old format."
     }
 
-    match run osuParser sample with
-    | Success (v, _, _) -> printfn $"Success %A{v}"
-    | Failure (msg, err, _) -> printfn $"%A{msg}"
+    //match run osuParser sample with
+    //| Success (v, _, _) -> printfn $"Success %A{v}"
+    //| Failure (msg, err, _) -> printfn $"%A{msg}"
+
+    test (skipRestOfLine true >>. metaParser "AudioFilename") sample
 
     0 // return an integer exit code
